@@ -26,13 +26,16 @@
 <div>
 <div>
 <form action="register.php" target="_blank">
-   <button>Добавить пользователя</button>
-  </form> </div> 
+<div class="form-group">
+     <input type="submit" name="submit" class="btn btn-primary" value="Добавить Пользователя">
+</form>  </div>
   <div>
 <form action="logout.php" target="_blank">
-   <button>Выйти</button>
-  </form> </div>
-</div>
+<div class="form-group">
+  <br><input type="submit" name="submit"  class="btn btn-primary" value="Выйти">
+</br>
+ </form> </div> 
+  <div>
 
 
        

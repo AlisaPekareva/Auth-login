@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $login = trim($_POST['login']);
     $password = trim($_POST['password']);
     $confirm_password = trim($_POST["confirm_password"]);
-    $password_hash = password_hash($password, PASSWORD_BCRYPT);
+    $password_hash = password_hash($password, PASSWORD_DEFAULT);
     
  
 
@@ -49,7 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 $insertQuery->bind_param("ssiss", $name, $surname, $age, $login, $password_hash);
                 $result = $insertQuery->execute();
                 if ($result) {
-                    echo "<p>Your registration was successful!</p>";
+                    $_SESSION['userid'] = $row['id'];
+                    $_SESSION['userid'] = $row;
+                    
+                    
                     header("location: welcome.php");
                     exit;
                 } else {
@@ -78,8 +81,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Register</h2>
-                    <p>Пожалуйста, заполните фому для регистрации.</p>
+                    <h2>Страница создания и сохранения Пользователя</h2>
+                    <p>Пожалуйста, заполните фому:</p>
                   
                     <?php  
                       //  echo $success;
@@ -90,33 +93,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                   
                     <form action="" method="post">
                         <div class="form-group">
-                            <label> Name</label>
+                            <label> Имя</label>
                             <input type="text" name="name" class="form-control" required>
                         </div>   
                         <div class="form-group">
-                            <label> Surname</label>
+                            <label> Фамилия</label>
                             <input type="text" name="surname" class="form-control" required>
                         </div> 
                         <div class="form-group">
-                            <label> Age</label>
+                            <label> Возраст</label>
                             <input type="int" name="age" class="form-control" required>
                         </div>  
                         <div class="form-group">
-                            <label>Login</label>
+                            <label>Логин</label>
                             <input type="text" name="login" class="form-control" required />
                         </div>    
                         <div class="form-group">
-                            <label>Password</label>
+                            <label>Пароль</label>
                             <input type="password" name="password" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Confirm Password</label>
+                            <label>Подтвердите пароль</label>
                             <input type="password" name="confirm_password" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="submit" class="btn btn-primary" value="Submit">
+                            <input type="submit" name="submit" class="btn btn-primary" value="Сохранить">
                         </div>
-                        <p>Already have an account? <a href="login.php">Login here</a>.</p>
+                        <p>У Вас уже есть аккаунт? <a href="login.php">Введите логин и пароль здесь</a>.</p>
                     </form>
                 </div>
             </div>

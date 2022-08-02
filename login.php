@@ -1,49 +1,66 @@
 <?php
-
-error_reporting (E_ALL);
  require_once "session.php";
  require_once "config.php";
-require_once "loginpage.php";
+ require_once "loginpage.php";
 
-$error = '';
- 
+// error_reporting(E_ALL); ini_set('display_errors', 'On'); 
+ $error = '';
 
- 
+   
  if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['submit'])) {
 
-    $login = trim($_POST['login']);
-    $password = trim($_POST['password']);
+       $login = trim($_POST['login']);
+       $password = trim($_POST['password']);
 
-     if (!empty($login) && !empty($password))  {
+               if (!empty($login) && !empty($password))  {
        
-        $query = $db->prepare("SELECT * FROM users WHERE login= ?;");
-         $query->bind_param('s', $login);
-         $query->execute();
-         $row = $query->fetch();
-             
-            if ($row) {
-                 password_verify($password, $row['password']);
-                    $_SESSION['userid'] = $row['id'];
-                    $_SESSION['userid'] = $row;
+                $stmt = $db->prepare("SELECT * FROM users WHERE login= ?;");
+                $stmt->bind_param('s', $login);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+               
+               
+            
+                  
+                    if($row){
+                      $verify = password_verify($password, $row['password']);
+                     
 
+                     if ($verify){
+
+                          //echo "все верно" ;         
+                     $_SESSION['userid'] = $row['id'];
+                     $_SESSION['userid'] = $row;
+                     
+                      
+                    // var_dump($_SESSION);
+                                        
+                                        
                     // Redirect the user to welcome page
-                    header("location: welcome.php");
-                    exit;
-                } 
-             else {
-                    echo "Пользователь не найден.проверьте правильность ввода данных";
-                }
-                $query->close();
-             }
+                    header("Location: welcome.php");
+                   exit;
+                     
+                      }  
+                      else {
+                        echo "Пароль неверный";
+                        }
+                        
+                             }
+                  
+                  
+               else {
+                    echo "Пользователь не найден.Проверьте правильность ввода данных";
+                  }
+                $stmt->close();
+
+    }
          else {
             echo "Данные не заполнены. Нужны логин и пароль";
            
-         }    
+               }    
      
-          
     // Close connection
     mysqli_close($db);
     
 }
-
-?>
