@@ -1,8 +1,7 @@
 <?php
-
 define('DBSERVER', 'localhost'); // Database server
 define('DBUSERNAME', 'root'); // Database username
-define('DBPASSWORD', ''); // Database password
+define('DBPASSWORD', 'root'); // Database password
 define('DBNAME', 'myusers'); // Database name
  
 /* connect to MySQL database */
@@ -12,4 +11,3 @@ $db = mysqli_connect(DBSERVER, DBUSERNAME, DBPASSWORD, DBNAME);
 if($db === false){
     die("Error: connection error. " . mysqli_connect_error());
 }
-?>

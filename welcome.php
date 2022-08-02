@@ -1,36 +1,32 @@
 <?php
 // start the session
-session_start();
+<?php ob_start() ?>
 
 
+    <h1><?= $user['name'] ?></h1>
+    <div class="date"><?= $user['id'] ?></div>
+    <div class="date"><?= $user['surname'] ?></div>
+    <div class="body">
+        <?= $user['age'] ?>
+    </div>
+<?php $content = ob_get_clean() ?>
 
-// Check if the user is not logged in, then redirect the user to login page
-if (!isset($_SESSION["userid"]) || $_SESSION["userid"] !== true) {
-   header("location: login.php");
-    exit;
-} else {
+<?php include 'layout.php' ?>
 
-    echo '<pre>';
-        
-print_r($_SESSION["name"]);
-echo '</pre>';
-
-
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         
-        <title>Welcome <?php echo $_SESSION["name"]; ?></title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
+        <title>Welcome </title>
+      
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Привет!  <strong><?php echo $_SESSION["name"]; ?></strong> Это главная страница сайта для авторизованного пользователя</h1>
+                    <h1>Привет!  Это главная страница сайта для авторизованного пользователя</h1>
                 </div>
                 <p>
                     <a href="logout.php" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Выйти</a>
